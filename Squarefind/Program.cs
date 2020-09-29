@@ -56,6 +56,9 @@ namespace Squarefind
         /// <summary>
         /// Input DiscriminantAC, output to console all the A and C possible using NCRcomb
         /// </summary>
+        /// <remarks>
+        /// NOTE: Make sure first arg of DiscriminantAC and the second arg of this method are equal, or the script asynchronizes and outputs negative squares (pain)
+        /// </remarks>
         /// <param name="AC"></param>
         public static void Discrimconsole(List<int> AC,int n)
         {
@@ -101,8 +104,11 @@ namespace Squarefind
         }
 
         /// <summary>
-        /// Output: List(int)[factors] Factors(8)=[2,2,2], Factors(26)=[2,13], NOTE: sorted
+        /// Output: List(int)[factors] Factors(8)=[2,2,2], Factors(26)=[2,13]
         /// </summary>
+        /// <remarks>
+        /// NOTE: Factors are sorted
+        /// </remarks>
         /// <param name="n"></param>
         /// <returns></returns>
         public static List<int> Factors(int n)
@@ -139,8 +145,11 @@ namespace Squarefind
         }
 
         /// <summary>
-        /// Output: Sumup(list(int))[ list( list(int)[no repeats], num of repeats ) ], Sumup(2,2,4,3):[(2,2),(4,1),(3,1)],Sumup(Factors(98)):[(2,1),(7,2)] NOTE: does not sort. 
+        /// Output: Sumup(list(int))[ list( list(int)[no repeats], num of repeats ) ], Sumup(2,2,4,3):[(2,2),(4,1),(3,1)],Sumup(Factors(98)):[(2,1),(7,2)] 
         /// </summary>
+        /// <remarks>
+        /// NOTE: Factors appear in the order each unique factor appeared originally
+        /// </remarks>
         /// <param name="List"></param>
         /// <returns></returns>
 
@@ -427,7 +436,7 @@ namespace Squarefind
             //    }
 
             //}
-            Discrimconsole(DiscriminantAC(69,100), 69);
+            Discrimconsole(DiscriminantAC(2020,666), 2020);
             //PrintValues(DiscriminantAC(3,100));
 
             //PrintValuess(NCRcomb(20));
