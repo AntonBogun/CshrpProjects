@@ -2,11 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
-
+// latest update: laptop 18/10
 namespace Squarefind
-{
+{ 
     class Program
     {
+        public static void CommonRoots(int n, int root)
+        {
+            var factors=Sumup(Factors(n));
+            var newfactors = new List<List<int>>();
+            int i = 0;
+            foreach(var factor in factAppend([2,3]);
+                i++;
+            }
+            
+            
+            
+        }
+
         /// <summary>
         /// Input Count, output int list of len COUNT (all 0)
         /// </summary>
@@ -101,7 +114,11 @@ namespace Squarefind
         }
 
         /// <summary>
-        /// Output: List(int)[factors] Factors(8)=[2,2,2], Factors(26)=[2,13], NOTE: sorted
+        /// Output: List(int)[factors]
+        /// <examples>
+        /// Factors(8)=[2,2,2], Factors(26)=[2,13]
+        /// </examples>
+        /// NOTE: sorts
         /// </summary>
         /// <param name="n"></param>
         /// <returns></returns>
@@ -139,7 +156,11 @@ namespace Squarefind
         }
 
         /// <summary>
-        /// Output: Sumup(list(int))[ list( list(int)[no repeats], num of repeats ) ], Sumup(2,2,4,3):[(2,2),(4,1),(3,1)],Sumup(Factors(98)):[(2,1),(7,2)] NOTE: does not sort. 
+        /// Output: Sumup(list(int))[ list( list(int)[no repeats], num of repeats ) ]
+        /// <examples>
+        /// Sumup(2,2,4,3):[(2,2),(4,1),(3,1)],Sumup(Factors(98)):[(2,1),(7,2)]
+        /// </examples>
+        /// NOTE: does not sort. 
         /// </summary>
         /// <param name="List"></param>
         /// <returns></returns>
@@ -328,7 +349,7 @@ namespace Squarefind
                 for (int _base = 0; _base < _leng; _base++)
                 {
                     _baselist[_base][1] = (int)(Math.Floor((decimal)n/_baselist[_base][0])%(_lenglist[_base]+1));
-                    
+                    //cast example
                     for (int i = 0; i < _baselist[_base][1]; i++)
                     {
                         _prefinal.Add(_list[_base][0]);
@@ -358,7 +379,7 @@ namespace Squarefind
             }
         }
         /// <summary>
-        /// print list (Arr)
+        /// print list (int)
         /// </summary>
         /// <param name="Arr"></param>
         public static void PrintValues(List<int> Arr)
@@ -371,9 +392,19 @@ namespace Squarefind
             }
             Console.WriteLine();
         }
-        public static void PrintValue(int n,int n1)
+        /// <summary>
+        /// print int n, or n=n1
+        /// </summary>
+        /// <param name="n"></param>
+        /// <param name="n1"></param>
+        public static void PrintValue(int n,int n1 = -69)
         {
-            Console.Write("\n{0} = {1}", n, n1);
+            if (n1 == -69)
+            {
+                Console.Write("\n{0} = {1}", n, n1);
+            }
+            else { Console.Write("\n{0}", n); }
+            
         }
 
 
@@ -384,6 +415,12 @@ namespace Squarefind
         /// <summary>
         /// do the func n to n2 times, print out "i:" if yes!=0
         /// </summary>
+        /// <example>
+        /// 
+        /// DoFromToWithN( (i) => func1( i,func2(i) ), 400, 800);
+        /// mmm yes (action)delegates
+        /// 
+        /// </example>
         /// <param name="func"></param>
         /// <param name="n"></param>
         /// <param name="n2"></param>
@@ -425,14 +462,18 @@ namespace Squarefind
             //        Desmosprint(i, NCRleng(i));
             //        _list.Add(NCRleng(i));
             //    }
-
             //}
-            Discrimconsole(DiscriminantAC(69,100), 69);
-            //PrintValues(DiscriminantAC(3,100));
 
-            //PrintValuess(NCRcomb(20));
+            //Discrimconsole(DiscriminantAC(69,100), 69);
+            
+            
+
+            //PrintValuess(NCRcomb(33));
+            
             //NCRcomb(10);
+            
             //Console.Write(Sumup(Factors(64))[0][1]);
+            
             //Fullsquare(10);
             //PrintValues();
             //Console.Write(Factors(685).Count);
