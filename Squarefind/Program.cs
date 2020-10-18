@@ -2,23 +2,119 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
-// latest update: laptop 18/10
+// latest update: desktop 18/10
+
+//list.length == list.Count !!!!!!
+//cast is (type)
+//Write("{0}+{1}",a,b) == "a+b"
+//√
 namespace Squarefind
-{ 
+{
     class Program
     {
-        public static void CommonRoots(int n, int root)
+        /// <summary>
+        /// input Sumup(), output readable string
+        /// <examples>
+        /// SumupToReadable(Sumup(Factors(132)))=[2^2]*3*11
+        /// </examples>
+        /// </summary>
+        /// <param name="sumup"></param>
+        /// <returns></returns>
+        public static string SumupToReadable(List<List<int>> sumup)
         {
-            var factors=Sumup(Factors(n));
-            var newfactors = new List<List<int>>();
+            string bruh = "";
             int i = 0;
-            foreach(var factor in factAppend([2,3]);
-                i++;
+            foreach (var power in sumup)
+            {
+                if (i == 0)
+                {
+                    i = 1;
+                }
+                else
+                {
+                    bruh += "*";
+                }
+                if (power[1] == 1)
+                {
+                    bruh += power[0].ToString();
+                }
+                else
+                {
+                    bruh += "[" + power[0].ToString() + "^" + power[1].ToString() + "]";
+                }
+
             }
-            
-            
-            
+            return bruh;
         }
+
+
+
+        /// <summary>
+        /// uses Factors and checks if first factor equals the value
+        /// </summary>
+        /// <param name="a"></param>
+        /// <returns></returns>
+        public static bool IsPrime(int a)
+        {
+            return Factors(a)[0] == a;
+        }
+
+
+        public static void CommonRoots(int i1, int i2, int root)
+        {
+            for (int n = i1; n <= i2; n++)
+            {
+                var factors = Sumup(Factors(n));
+                var newfactors = PopulateListt(factors.Count, 3);
+                int finalin = 1;
+                int finalout = 1;
+                for (int i = 0; i < factors.Count; i++)
+                {
+                    newfactors[i] =
+                        new List<int>
+                        {
+                        factors[i][1] - root * (int)Math.Floor((double)(factors[i][1] / root)),
+                        (int)Math.Floor((double)(factors[i][1] / root)),
+                        factors[i][0]
+                        };
+
+
+                    finalin *= (int)Math.Pow(newfactors[i][2], newfactors[i][0]);
+                    finalout *= (int)Math.Pow(newfactors[i][2], newfactors[i][1]);
+
+
+                }
+                Console.Write("\n\n{0}√({1}) = ", root, n);
+                if (finalout != 1)
+                {
+                    Console.Write("{0}", finalout);
+                }
+                if (finalout != 1 && finalin != 1)
+                {
+                    Console.Write("*");
+                }
+                if (finalin != 1)
+                {
+                    if (IsPrime(finalin))
+                    {
+                        Console.Write("{0}√({1})", root, finalin);
+                    }
+                    else if (finalout == 1)
+                    {
+                        Console.Write("{0}√({1})", root, SumupToReadable(Sumup(Factors(finalin))));
+                    }
+                    else
+                    {
+                        Console.Write("{0}√({1} == {2})", root, SumupToReadable(Sumup(Factors(finalin))), finalin);
+                    }
+
+                }
+            }
+        }
+
+
+
+
 
         /// <summary>
         /// Input Count, output int list of len COUNT (all 0)
@@ -37,7 +133,7 @@ namespace Squarefind
         /// <param name="count"></param>
         /// <param name="count2"></param>
         /// <returns>List[List[0,0,0...Count2]...Count]</returns>
-        public static List<List<int>> PopulateListt(int count,int count2)
+        public static List<List<int>> PopulateListt(int count, int count2)
         {
             var _List = new List<List<int>>();
             for (int i = 0; i < count; i++) { _List.Add(new List<int>(new int[count2])); }
@@ -53,15 +149,15 @@ namespace Squarefind
         {
             var disclist = new List<int>();
             double n2 = Math.Pow(n, 2);
-            for (int i = 0; i<k; i++)
+            for (int i = 0; i < k; i++)
             {
                 double i2 = (int)Math.Pow(i, 2);
                 double diff = n2 - i2;
-                
+
                 if (diff / 4 == Math.Round(diff / 4))
                 {
                     disclist.Add((int)diff / -4);
-                    
+
                 }
             }
             return disclist;
@@ -69,57 +165,64 @@ namespace Squarefind
         /// <summary>
         /// Input DiscriminantAC, output to console all the A and C possible using NCRcomb
         /// </summary>
+        /// <remarks>
+        /// NOTE: Make sure first arg of DiscriminantAC and the second arg of this method are equal, or the script asynchronizes and outputs negative squares (pain)
+        /// </remarks>
         /// <param name="AC"></param>
-        public static void Discrimconsole(List<int> AC,int n)
+        public static void Discrimconsole(List<int> AC, int n)
         {
-            var ACfactors = new List < List<int> > ();
+            var ACfactors = new List<List<int>>();
             foreach (var ac in AC)
             {
                 var ACfactor = NCRcomb(Math.Abs(ac));
                 int sign = Math.Sign(ac);
                 var _templist = new List<int>();
-                for (int i = 0; i < ACfactor.Count; i++)                   
+                for (int i = 0; i < ACfactor.Count; i++)
                 {
                     var _temp = 1;
                     for (int i1 = 0; i1 < ACfactor[i].Count; i1++)
                     {
                         _temp *= ACfactor[i][i1];
                     }
-                    _templist.Add(_temp*sign);
+                    _templist.Add(_temp * sign);
                 }
                 ACfactors.Add(_templist);
             }
-            Console.WriteLine("{0}-I^2=-4ac\n\n",Math.Pow(n,2));
+            Console.WriteLine("{0}-I^2=-4ac\n\n", Math.Pow(n, 2));
             for (int _ac = 0; _ac < AC.Count; _ac++)
             {
                 int I = (int)Math.Pow(n, 2) + 4 * AC[_ac];
                 Console.WriteLine("\n({0}^2)-{1}=-4*{2}", n, I, AC[_ac]);
-                Console.WriteLine("i={0}",Math.Sqrt(I));
+                Console.WriteLine("i={0}", Math.Sqrt(I));
                 foreach (var _a in ACfactors[_ac])
                 {
-                    if (AC[_ac]!=0)
+                    if (AC[_ac] != 0)
                     {
                         var c = AC[_ac] / _a;
-                        Console.WriteLine("({0},{1})",_a,c);
+                        Console.WriteLine("({0},{1})", _a, c);
                     }
                     else
                     {
                         Console.WriteLine("(0,any) or (any,0)");
                     }
-                    
-                    
+
+
                 }
             }
-            
+
         }
 
         /// <summary>
+        /// Output: List(int)[factors] Factors(8)=[2,2,2], Factors(26)=[2,13]
         /// Output: List(int)[factors]
         /// <examples>
         /// Factors(8)=[2,2,2], Factors(26)=[2,13]
         /// </examples>
         /// NOTE: sorts
         /// </summary>
+        /// <remarks>
+        /// NOTE: Factors are sorted
+        /// </remarks>
         /// <param name="n"></param>
         /// <returns></returns>
         public static List<int> Factors(int n)
@@ -134,8 +237,8 @@ namespace Squarefind
                 more = false;
                 for (int i = k; i <= (int)Math.Floor(Math.Sqrt(x)); i++)
                 {
-                   
-                    if (x%i==0)
+
+                    if (x % i == 0)
                     {
                         factors.Add(i);
                         x /= i;
@@ -151,17 +254,21 @@ namespace Squarefind
                     factors.Add(x);
                 }
             }
-            
+
             return factors;
         }
 
         /// <summary>
+        /// Output: Sumup(list(int))[ list( list(int)[no repeats], num of repeats ) ], Sumup(2,2,4,3):[(2,2),(4,1),(3,1)],Sumup(Factors(98)):[(2,1),(7,2)] 
         /// Output: Sumup(list(int))[ list( list(int)[no repeats], num of repeats ) ]
         /// <examples>
         /// Sumup(2,2,4,3):[(2,2),(4,1),(3,1)],Sumup(Factors(98)):[(2,1),(7,2)]
         /// </examples>
         /// NOTE: does not sort. 
         /// </summary>
+        /// <remarks>
+        /// NOTE: Factors appear in the order each unique factor appeared originally
+        /// </remarks>
         /// <param name="List"></param>
         /// <returns></returns>
 
@@ -181,7 +288,7 @@ namespace Squarefind
                 }
                 else
                 {
-                    fullList[newList.IndexOf(a)][1]++; 
+                    fullList[newList.IndexOf(a)][1]++;
                 }
             }
 
@@ -203,16 +310,16 @@ namespace Squarefind
             {
                 int a2 = (int)Math.Pow(a, 2);
                 double dif = Math.Sqrt(a2 - n2);
-                
+
                 if (dif % 1 == 0)
                 {
 
                     List<int> yes = new List<int>();
                     yes.Add(a);
                     yes.Add((int)dif);
-                    Final.Add(yes);   
+                    Final.Add(yes);
                 }
-                
+
             }
             return Final;
         }
@@ -229,7 +336,7 @@ namespace Squarefind
             for (int a = 1; a < n; a++)
             {
                 int a2 = (int)Math.Pow(a, 2);
-                double dif = Math.Sqrt(n2-a2);
+                double dif = Math.Sqrt(n2 - a2);
 
                 if (dif % 1 == 0)
                 {
@@ -315,7 +422,7 @@ namespace Squarefind
             int _total = 1;
             for (int i = 0; i < _leng; i++)
             {
-                _total = _total*(_list[i][1]+1);
+                _total = _total * (_list[i][1] + 1);
             }
             _total -= 1;
             return _total;
@@ -329,12 +436,12 @@ namespace Squarefind
         public static List<List<int>> NCRcomb(int _n)
         {
             var _list = Sumup(Factors(_n));
-            
+
             var _leng = _list.Count;
             var _lenglist = new List<int>();
             int _total = 1;
-            var _baselist = PopulateListt(_leng,2);
-            
+            var _baselist = PopulateListt(_leng, 2);
+
             for (int i = 0; i < _leng; i++)
             {
                 _baselist[i][0] = _total;
@@ -348,7 +455,7 @@ namespace Squarefind
                 var _prefinal = new List<int>();
                 for (int _base = 0; _base < _leng; _base++)
                 {
-                    _baselist[_base][1] = (int)(Math.Floor((decimal)n/_baselist[_base][0])%(_lenglist[_base]+1));
+                    _baselist[_base][1] = (int)(Math.Floor((decimal)n / _baselist[_base][0]) % (_lenglist[_base] + 1));
                     //cast example
                     for (int i = 0; i < _baselist[_base][1]; i++)
                     {
@@ -356,7 +463,7 @@ namespace Squarefind
                     }
                 }
                 _done.Add(_prefinal);
-                
+
             }
             return _done;
         }
@@ -367,15 +474,15 @@ namespace Squarefind
         /// <param name="Arr"></param>
         public static void PrintValuess(List<List<int>> Arr)
         {
-            
+
             for (int i = 0; i < Arr.Count; i++)
             {
-                Console.Write("\n{0}:",i+1);
+                Console.Write("\n{0}:", i + 1);
                 for (int i1 = 0; i1 < Arr[i].Count; i1++)
                 {
-                    Console.Write("\n  {0} = {1}", i1+1,Arr[i][i1]);
+                    Console.Write("\n  {0} = {1}", i1 + 1, Arr[i][i1]);
                 }
-                
+
             }
         }
         /// <summary>
@@ -387,7 +494,7 @@ namespace Squarefind
             var a = 1;
             foreach (Object i in Arr)
             {
-                Console.Write("\n{0} = {1}",a, i);
+                Console.Write("\n{0} = {1}", a, i);
                 a++;
             }
             Console.WriteLine();
@@ -397,14 +504,14 @@ namespace Squarefind
         /// </summary>
         /// <param name="n"></param>
         /// <param name="n1"></param>
-        public static void PrintValue(int n,int n1 = -69)
+        public static void PrintValue(int n, int n1 = -69)
         {
-            if (n1 == -69)
+            if (n1 != -69)
             {
                 Console.Write("\n{0} = {1}", n, n1);
             }
             else { Console.Write("\n{0}", n); }
-            
+
         }
 
 
@@ -425,13 +532,13 @@ namespace Squarefind
         /// <param name="n"></param>
         /// <param name="n2"></param>
         /// <param name="yes"></param>
-        public static void DoFromToWithN(Action<int> func, int n,int n2,int yes = 0)
+        public static void DoFromToWithN(Action<int> func, int n, int n2, int yes = 0)
         {
             for (int i = n; i < n2; i++)
             {
                 if (yes != 0)
                 {
-                    Console.Write("\n\n{0}:\n",i);
+                    Console.Write("\n\n{0}:\n", i);
                 }
                 func(i);
             }
@@ -463,17 +570,19 @@ namespace Squarefind
             //        _list.Add(NCRleng(i));
             //    }
             //}
+            //Discrimconsole(DiscriminantAC(2020,666), 2020);
+            //PrintValues(DiscriminantAC(3,100));
 
             //Discrimconsole(DiscriminantAC(69,100), 69);
-            
-            
-
+            //Console.WriteLine(SumupToReadable(Sumup(Factors(132))));
+            //Fullsquare(40);
+            CommonRoots(8, 400, 2);
             //PrintValuess(NCRcomb(33));
-            
+
             //NCRcomb(10);
-            
+
             //Console.Write(Sumup(Factors(64))[0][1]);
-            
+
             //Fullsquare(10);
             //PrintValues();
             //Console.Write(Factors(685).Count);
