@@ -13,7 +13,7 @@ namespace Squarefind
     class Program
     {
 
-        public static bool IsPrime(int i)
+        public static bool ObsoleteIsPrime(int i)
         {
             //DUDE THE HECKIN SIEVE WORKS LETS FRICKING GOOOOO
             int _i = i % 60;
@@ -77,8 +77,6 @@ namespace Squarefind
                         break;
                 }
             }
-            
-
             return result;
         }
         /// <summary>
@@ -749,34 +747,34 @@ namespace Squarefind
             //PrintValues();
             //Console.Write(Factors(685).Count);
 
-            for (int i = 0; i < 1000; i++)
-            {
-                //Console.Write("\n{0}", i);
-                //PrintValues(new List<bool> { IsPrime(i), BasicIsPrime(i) });
-                if (IsPrime(i)!=IsPrime(i))
-                {
-                    Console.Write(i);
-                    
-                }
-            }
+            //for (int i = 0; i < 1000; i++)
+            //{
+            //    //Console.Write("\n{0}", i);
+            //    //PrintValues(new List<bool> { IsPrime(i), BasicIsPrime(i) });
+            //    if (IsPrime(i)!=IsPrime(i))
+            //    {
+            //        Console.Write(i);
+
+            //    }
+            //}
 
             //PrintValue(IsPrime(341));
             //PrintValue(BasicIsPrime(341));
-            //Stopwatch stopWatch = new Stopwatch();
-            //stopWatch.Start();
-            //for (double i = 0; i < 100000000; i++)
-            //{
-            //    bool k = Math.Floor(Math.Sqrt(i))==Math.Sqrt(i);
-            //}
-            //stopWatch.Stop();
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            for (int i = 0; i < 100000000; i++)
+            {
+                double k = Math.Sqrt(i);
+            }
+            stopWatch.Stop();
 
-            //TimeSpan ts = stopWatch.Elapsed;
+            TimeSpan ts = stopWatch.Elapsed;
 
 
-            //string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
-            //    ts.Hours, ts.Minutes, ts.Seconds,
-            //    ts.Milliseconds );
-            //Console.WriteLine("RunTime " + elapsedTime);
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+                ts.Hours, ts.Minutes, ts.Seconds,
+                ts.Milliseconds);
+            Console.WriteLine("RunTime " + elapsedTime);
         }
     }
 }
