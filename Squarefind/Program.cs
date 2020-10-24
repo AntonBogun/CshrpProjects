@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
+using System.Linq;
 // latest update: desktop 23/10
 
 //list.length == list.Count !!!!!!
@@ -13,13 +13,77 @@ namespace Squarefind
     class Program
     {
 
+
+
+
+
+
+
+
+
+
+
+
+
+        //stole, and tbh i don;t car
+        //0.25 sec run on 1 mil
+        public static bool IsPrime(int number)
+        {
+            if (number <= 1) return false;
+            if (number == 2) return true;
+            if (number % 2 == 0) return false;
+
+            var boundary = (int)Math.Floor(Math.Sqrt(number));
+
+            for (int i = 3; i <= boundary; i += 2)
+                if (number % i == 0)
+                    return false;
+
+            return true;
+        }
+
+        //trying to be fancy but apparently modulus is better. 0.45 sec run on 1mil
+        public static bool GoodIsPrime(int I)
+        {
+            double i = I;
+            if (i==2 || i==5)
+            {
+                return true;
+            }
+            double _i = i-Math.Floor((double)(i/10)) * 10;
+            
+            if (_i%2==0 || _i==5)
+            {
+                return false;
+            }
+            double s = Math.Sqrt(i);
+            var end = false;
+            double n = 3;
+            while (n<=s)
+            {
+                if ((double)(i / n) == Math.Floor((double)(i / n)))
+                {
+                    break;
+                }
+                n += 2;
+            }
+            if (n>s)
+            {
+                end = true;
+            }
+            return end; 
+        }
         public static bool ObsoleteIsPrime(int i)
         {
+            
             //DUDE THE HECKIN SIEVE WORKS LETS FRICKING GOOOOO
+            //Insanely inefficient tho. Bruh
+            //10 sec run on 1 mil
             int _i = i % 60;
             double _s = Math.Sqrt(i);
             bool result = false;
-            if (i==2 || i==3 || i == 5){
+            if (i == 2 || i == 3 || i == 5)
+            {
                 result = true;
             }
             else
@@ -34,10 +98,10 @@ namespace Squarefind
                     case 41:
                     case 49:
                     case 53:
-                        for (int i1 = 1; 2*i1 <= _s; i1++)
+                        for (int i1 = 1; 2 * i1 <= _s; i1++)
                         {
-                            
-                            if (Math.Floor(Math.Sqrt(i-4*Math.Pow(i1,2))) == Math.Sqrt(i - 4 * Math.Pow(i1, 2)))
+
+                            if (Math.Floor(Math.Sqrt(i - 4 * Math.Pow(i1, 2))) == Math.Sqrt(i - 4 * Math.Pow(i1, 2)))
                             {
                                 result = !result;
                             }
@@ -48,9 +112,9 @@ namespace Squarefind
                     case 19:
                     case 31:
                     case 43:
-                        for (int i1 = 1; Math.Sqrt(3)*i1 <= _s; i1++)
+                        for (int i1 = 1; Math.Sqrt(3) * i1 <= _s; i1++)
                         {
-                            
+
                             if (Math.Floor(Math.Sqrt(i - 3 * Math.Pow(i1, 2))) == Math.Sqrt(i - 3 * Math.Pow(i1, 2)))
                             {
                                 result = !result;
@@ -62,11 +126,11 @@ namespace Squarefind
                     case 23:
                     case 47:
                     case 59:
-                       
-                        for (double i1 = Math.Ceiling(_s/Math.Sqrt(3)); i1 > Math.Sqrt(3 * Math.Pow(i1, 2) - i); i1++)
+
+                        for (double i1 = Math.Ceiling(_s / Math.Sqrt(3)); i1 > Math.Sqrt(3 * Math.Pow(i1, 2) - i); i1++)
                         {
-                            
-                            if (Math.Floor(Math.Sqrt(3 * Math.Pow(i1, 2)-i)) == Math.Sqrt(3 * Math.Pow(i1, 2)-i))
+
+                            if (Math.Floor(Math.Sqrt(3 * Math.Pow(i1, 2) - i)) == Math.Sqrt(3 * Math.Pow(i1, 2) - i))
                             {
                                 result = !result;
                             }
@@ -85,7 +149,7 @@ namespace Squarefind
         /// <param name="list"></param>
         /// <returns></returns>
         public static List<int> NextPrime(List<int> list)
-            {
+        {
             int i = list[0];
             int s = list[1];
             bool end = false;
@@ -97,15 +161,15 @@ namespace Squarefind
                     case 1:
                         i += 6;
                         s = 7;
-                        
+
                         break;
                     case 7:
                         i += 6;
-                        s = 11; 
+                        s = 11;
                         break;
                     case 11:
                         i += 6;
-                        s = 13; 
+                        s = 13;
                         break;
                     case 13:
                         i += 6;
@@ -125,7 +189,7 @@ namespace Squarefind
                         break;
                     case 29:
                         i += 6;
-                        s = 8; 
+                        s = 8;
                         break;
                     default:
                         if (s < 30)
@@ -141,11 +205,11 @@ namespace Squarefind
                         break;
                 }
             }
-            
+
             list[0] = i;
             list[1] = s;
             return list;
-            }
+        }
 
         /// <summary>
         /// input Sumup(), output readable string
@@ -186,6 +250,7 @@ namespace Squarefind
 
         /// <summary>
         /// uses Factors and checks if first factor equals the value
+        /// inefficient: 3 sec run on 1 mil
         /// </summary>
         /// <param name="a"></param>
         /// <returns></returns>
@@ -744,34 +809,37 @@ namespace Squarefind
             //Console.Write(Sumup(Factors(64))[0][1]);
 
             //Fullsquare(10);
-            //PrintValues();
+            //PrintValue(IsPrime(7));
             //Console.Write(Factors(685).Count);
 
             //for (int i = 0; i < 1000; i++)
             //{
             //    //Console.Write("\n{0}", i);
             //    //PrintValues(new List<bool> { IsPrime(i), BasicIsPrime(i) });
-            //    if (IsPrime(i)!=IsPrime(i))
+            //    if (IsPrime(i) != BasicIsPrime(i))
             //    {
-            //        Console.Write(i);
+            //        Console.Write("{0}\n", i);
 
             //    }
             //}
 
             //PrintValue(IsPrime(341));
             //PrintValue(BasicIsPrime(341));
+
+
+
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
-            for (int i = 0; i < 100000000; i++)
+            for (int i = 2; i < 1000000; i++)
             {
-                double k = Math.Sqrt(i);
+                bool k = GoodIsPrime(i);
             }
             stopWatch.Stop();
 
             TimeSpan ts = stopWatch.Elapsed;
 
 
-            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:000}",
                 ts.Hours, ts.Minutes, ts.Seconds,
                 ts.Milliseconds);
             Console.WriteLine("RunTime " + elapsedTime);
