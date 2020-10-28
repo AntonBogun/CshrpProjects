@@ -77,6 +77,7 @@ namespace Squarefind
         {
             
             //DUDE THE HECKIN SIEVE WORKS LETS FRICKING GOOOOO
+            //Atkin
             //Insanely inefficient tho. Bruh
             //10 sec run on 1 mil
             int _i = i % 60;
@@ -250,7 +251,7 @@ namespace Squarefind
 
         /// <summary>
         /// uses Factors and checks if first factor equals the value
-        /// inefficient: 3 sec run on 1 mil
+        /// inefficient: 3 sec run on 1 milf
         /// </summary>
         /// <param name="a"></param>
         /// <returns></returns>
@@ -830,9 +831,9 @@ namespace Squarefind
 
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
-            for (int i = 2; i < 1000000; i++)
+            for (int i = 2; i < 100000; i++)
             {
-                bool k = GoodIsPrime(i);
+                bool k = ObsoleteIsPrime(i);
             }
             stopWatch.Stop();
 
@@ -843,6 +844,7 @@ namespace Squarefind
                 ts.Hours, ts.Minutes, ts.Seconds,
                 ts.Milliseconds);
             Console.WriteLine("RunTime " + elapsedTime);
+            //test
         }
     }
 }
