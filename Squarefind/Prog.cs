@@ -13,18 +13,6 @@ namespace Squarefind
     class Program
     {
 
-
-
-
-
-
-
-
-
-
-
-
-
         //stole, and tbh i don;t car
         //0.25 sec run on 1 mil
         public static bool IsPrime(int number)
